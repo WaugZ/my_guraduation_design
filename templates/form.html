@@ -1,10 +1,14 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Please Sign In</title>
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='common_style.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap-4/css/bootstrap.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/common_style.css') }}">
 </head>
 <body>
-  <a href="/home">back</a>
+  <nav>
+  <a href="/home">home</a>
+  </nav>
   {% if message %}
   <p style="color:red">{{ message }}</p>
   {% endif %}

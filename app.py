@@ -4,12 +4,26 @@ from flask_login import LoginManager, UserMixin
 from config import DevConfig
 
 app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.session_protection = "strong"
+#用户认证
+login_manger=LoginManager()
+#配置用户认证信息
+login_manger.init_app(app)
+#认证加密程度
+login_manger.session_protection='strong'
+#登陆认证的处理视图
+login_manger.login_view='auth.login'
+#登陆提示信息
+login_manger.login_message=u'对不起，您还没有登录'
+login_manger.login_message_category='info'
 
-# 可设置为None，basic，strong已提供不同的安全等级
-# login_manager.login_view = "login"  # 设置登录页
-
+#用户表
+# class Users(db.Model,UserMixin):
+#     __tablename__='users'
+#     id=db.Column(db.Integer,primary_key=True)
+#     username=db.Column(db.String(20),nullable=False,index=True)
+#     password=db.Column(db.String(255), nullable=False,index=True)
+#     phone=db.Column(db.String(32),nullable=False)
+#     email=db.Column(db.String(50),nullable=False)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home/', methods=['GET', 'POST'])
