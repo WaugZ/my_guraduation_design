@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Please Sign In</title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap-4/css/bootstrap.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/common_style.css') }}">
+</head>
+<body>
+  <nav>
+  <a href="/home">home</a>
+  </nav>
+  {% if message %}
+  <p style="color:red">{{ message }}</p>
+  {% endif %}
+  <form action="/signin/" method="post">
+    <legend>Please sign in:</legend>
+    <p><input name="username" placeholder="Username" value="{{ username }}"></p>
+    <p><input name="password" placeholder="Password" type="password"></p>
+    <p><button type="submit">Sign In</button></p>
+    <p><button type="reset">Cancel</button></p>
+  </form>
+</body>
+</html>
