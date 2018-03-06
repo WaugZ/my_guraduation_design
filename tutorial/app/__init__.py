@@ -1,18 +1,14 @@
-import os.path as osp
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_openid import OpenID
-from config import basedir
+from config import Config
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object(Config)
 db = SQLAlchemy(app)
-
-lm = LoginManager()
-lm.init_app(app)
-lm.login_view = 'login'
-
-oid = OpenID(app, osp.join(basedir, 'tmp'))
+migrate = Migrate(app, db)
+login = LoginManager(app)
+login.login_view = 'login'
 
 from app import views, models
