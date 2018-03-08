@@ -10,7 +10,7 @@
         - 若未创建虚拟环境 conda create --name flask python=2.7/3.4
         - python 3 env flask 也行（未试验）
     - 首次使用，安装依赖
-        - for req in `cat requirements.txt`;do pip install $req;done
+        - for req in $(cat requirements.txt);do pip install $req;done
 - 启动数据库
     - FLASK_APP = *** flask db init
     - FLASK_APP = *** flask db upgrade
@@ -18,7 +18,7 @@
         - FLASK_APP = *** flask db downgrade 如果需要降级
 - 启动网页
     - FLASK_APP = *** flask run
-    - 加入参数 port **** host **** 如果需要更改host或port
+    - 加入参数 port *** host *** 如果需要更改host或port
 
 ## 开发
 - 新增数据库表
