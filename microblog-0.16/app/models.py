@@ -5,8 +5,8 @@ from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
-from my_first_try.app import db, login
-from my_first_try.app import add_to_index, remove_from_index, query_index
+from app import db, login
+from app.search import add_to_index, remove_from_index, query_index
 
 
 class SearchableMixin(object):
