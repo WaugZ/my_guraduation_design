@@ -89,3 +89,5 @@ Traceback (most recent call last):
     raise BuildError(endpoint, values, method, self)
 BuildError: Could not build url for endpoint 'auth.login'. Did you mean 'main.index' instead?
 2018-03-11 20:26:48,916 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
+2018-03-11 23:20:40,079 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
+2018-03-11 23:21:06,655 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
