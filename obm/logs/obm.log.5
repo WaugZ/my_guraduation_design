@@ -1,94 +1,112 @@
-2018-03-11 20:26:06,610 ERROR: Exception on / [GET] [in /Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py:1560]
+2018-03-12 09:56:03,684 ERROR: Exception on / [GET] [in /home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/main/routes.py", line 48, in index
-    return render_template('index.html', title=_('Home'))
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/index.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
-    {%- block html %}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
-    {% block body -%}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block "body"
-    {% block navbar %}
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/base.html", line 33, in block "navbar"
-    <!--<li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>-->
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/werkzeug/routing.py", line 1768, in build
-    raise BuildError(endpoint, values, method, self)
-BuildError: Could not build url for endpoint 'auth.login'. Did you mean 'main.index' instead?
-2018-03-11 20:26:41,920 ERROR: Exception on / [GET] [in /Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py:1560]
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1610, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1831, in preprocess_request
+    rv = func()
+  File "/media/store/myImplement/my_graduation_paper/obm/app/main/routes.py", line 16, in before_request
+    if current_user.is_authenticated:
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/utils.py", line 302, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/login_manager.py", line 317, in _load_user
+    return self.reload_user()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/login_manager.py", line 279, in reload_user
+    user = self.user_callback(user_id)
+  File "/media/store/myImplement/my_graduation_paper/obm/app/models.py", line 120, in load_user
+    return User.query.get(int(id))
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 512, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1222, in _configure_all
+    configure_mappers()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2872, in configure_mappers
+    mapper._post_configure_properties()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1765, in _post_configure_properties
+    prop.init()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/interfaces.py", line 184, in init
+    self.do_init()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1653, in do_init
+    self._process_dependent_arguments()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1710, in _process_dependent_arguments
+    self.target = self.mapper.mapped_table
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 764, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1626, in mapper
+    argument = self.argument()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/ext/declarative/clsregistry.py", line 293, in __call__
+    (self.prop.parent, self.arg, n.args[0], self.cls)
+InvalidRequestError: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
+2018-03-12 09:56:42,707 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:56:50,633 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:57:24,959 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:57:42,838 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:57:51,725 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:58:01,422 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+2018-03-12 09:58:05,564 ERROR: Exception on / [GET] [in /home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1614, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1517, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/main/routes.py", line 48, in index
-    return render_template('index.html', title=_('Home'))
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/index.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
-    {%- block html %}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
-    {% block body -%}
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block "body"
-    {% block navbar %}
-  File "/Users/wangzi/Desktop/my_guraduation_design/obm/app/templates/base.html", line 33, in block "navbar"
-    </div>
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/Users/wangzi/anaconda/envs/flask/lib/python2.7/site-packages/werkzeug/routing.py", line 1768, in build
-    raise BuildError(endpoint, values, method, self)
-BuildError: Could not build url for endpoint 'auth.login'. Did you mean 'main.index' instead?
-2018-03-11 20:26:48,916 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
-2018-03-11 23:20:40,079 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
-2018-03-11 23:21:06,655 INFO: Obm startup [in /Users/wangzi/Desktop/my_guraduation_design/obm/app/__init__.py:77]
-2018-03-12 09:55:54,299 INFO: Obm startup [in /media/store/myImplement/my_graduation_paper/obm/app/__init__.py:77]
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1610, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask/app.py", line 1831, in preprocess_request
+    rv = func()
+  File "/media/store/myImplement/my_graduation_paper/obm/app/main/routes.py", line 16, in before_request
+    if current_user.is_authenticated:
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/utils.py", line 302, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/login_manager.py", line 317, in _load_user
+    return self.reload_user()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_login/login_manager.py", line 279, in reload_user
+    user = self.user_callback(user_id)
+  File "/media/store/myImplement/my_graduation_paper/obm/app/models.py", line 120, in load_user
+    return User.query.get(int(id))
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/flask_sqlalchemy/__init__.py", line 512, in __get__
+    mapper = orm.class_mapper(type)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 421, in class_mapper
+    mapper = _inspect_mapped_class(class_, configure=configure)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/base.py", line 400, in _inspect_mapped_class
+    mapper._configure_all()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1222, in _configure_all
+    configure_mappers()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 2872, in configure_mappers
+    mapper._post_configure_properties()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/mapper.py", line 1765, in _post_configure_properties
+    prop.init()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/interfaces.py", line 184, in init
+    self.do_init()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1653, in do_init
+    self._process_dependent_arguments()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1710, in _process_dependent_arguments
+    self.target = self.mapper.mapped_table
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 764, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/orm/relationships.py", line 1626, in mapper
+    argument = self.argument()
+  File "/home/train/anaconda2/envs/flask/lib/python2.7/site-packages/sqlalchemy/ext/declarative/clsregistry.py", line 293, in __call__
+    (self.prop.parent, self.arg, n.args[0], self.cls)
+InvalidRequestError: When initializing mapper Mapper|User|user, expression 'Post' failed to locate a name ("name 'Post' is not defined"). If this is a class name, consider adding this relationship() to the <class 'app.models.User'> class after both dependent classes have been defined.
