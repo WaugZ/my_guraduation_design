@@ -9,6 +9,7 @@
     - source activate flask
         - 若未创建虚拟环境 conda create --name flask python=2.7/3.4
         - python 3 env flask 也行（未试验）
+        - 若不会污染其他python程序的依赖包，也可以不使用虚拟环境
     - 首次使用，安装依赖
         - for req in $(cat requirements.txt);do pip install $req;done
 - 启动数据库
