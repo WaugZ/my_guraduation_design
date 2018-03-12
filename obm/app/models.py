@@ -52,13 +52,15 @@ from app import db, login
 # )
 
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    # email = db.Column(db.String(120), index=True, unique=True)
+    # password_hash = db.Column(db.String(128))
     # posts = db.relationship('Post', backref='author', lazy='dynamic')
-    about_me = db.Column(db.String(140))
+    models = db.relationship('Models', backref='author', lazy='dynamic')
+    # about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     # followed = db.relationship(
     #     'User', secondary=followers,
@@ -99,20 +101,20 @@ class User(UserMixin, db.Model):
     #     own = Post.query.filter_by(user_id=self.id)
     #     return followed.union(own).order_by(Post.timestamp.desc())
 
-    def get_reset_password_token(self, expires_in=600):
-        return jwt.encode(
-            {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'],
-            algorithm='HS256').decode('utf-8')
-
-    @staticmethod
-    def verify_reset_password_token(token):
-        try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
-        except:
-            return
-        return User.query.get(id)
+    # def get_reset_password_token(self, expires_in=600):
+    #     return jwt.encode(
+    #         {'reset_password': self.id, 'exp': time() + expires_in},
+    #         current_app.config['SECRET_KEY'],
+    #         algorithm='HS256').decode('utf-8')
+    #
+    # @staticmethod
+    # def verify_reset_password_token(token):
+    #     try:
+    #         id = jwt.decode(token, current_app.config['SECRET_KEY'],
+    #                         algorithms=['HS256'])['reset_password']
+    #     except:
+    #         return
+    #     return User.query.get(id)
 
 
 @login.user_loader
@@ -134,3 +136,13 @@ def load_user(id):
 
 # db.event.listen(db.session, 'before_commit', Post.before_commit)
 # db.event.listen(db.session, 'after_commit', Post.after_commit)
+
+class Models(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    model_name = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    model_path = db.Column(db.String)  # path to model stored in server
+
+    def __repr__(self):
+        return  '<Model {}>'.format(self.model_name)

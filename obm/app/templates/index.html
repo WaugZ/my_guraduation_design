@@ -2,7 +2,11 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+    {% if current_user.is_authenticated %}
     <h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
+    {% else %}
+    <h1> Welcome to obm(One Button Modeling System)!</h1>
+    {% endif %}
     {% if form %}
     {{ wtf.quick_form(form) }}
     <br>
