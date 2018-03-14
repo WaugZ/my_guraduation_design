@@ -104,7 +104,7 @@ class User(UserMixin, db.Model):
     #     return followed.union(own).order_by(Post.timestamp.desc())
     def owned_models(self):
         models = Models.query.filter_by(user_id=self.id)
-        return models
+        return models.order_by(Models.timestamp.desc())
     # def get_reset_password_token(self, expires_in=600):
     #     return jwt.encode(
     #         {'reset_password': self.id, 'exp': time() + expires_in},
