@@ -6,10 +6,14 @@ from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
 # from app.main.forms import EditProfileForm, PostForm, SearchForm
-from app.models import User
+from app.main.forms import ModelForm
+from app.models import User, Models
 # from app.translate import translate
 from app.main import bp
 
+
+data_path = "/"
+model_path = "/"
 
 @bp.before_app_request
 def before_request():
@@ -25,6 +29,7 @@ def before_request():
 # @login_required
 def index():
     # form = PostForm()
+    form = ModelForm()
     # if form.validate_on_submit():
     #     language = guess_language(form.post.data)
     #     if language == 'UNKNOWN' or len(language) > 5:
@@ -35,9 +40,18 @@ def index():
     #     db.session.commit()
     #     # flash(_('Your post is now live!'))
     #     return redirect(url_for('main.index'))
-    # page = request.args.get('page', 1, type=int)
+    if form.validate_on_submit():
+        model = Models(model_name=form.model_name.data, model_target=form.model_target.data,
+                       author=current_user, data_path=data_path, model_path=model_path)
+        db.session.add(model)
+        db.session.commit()
+        flash("A new model is under construct!")
+        # return redirect(url_for('model/<form.model_name.data>'))  # in the future version, it will jump to model page
+        return redirect(url_for('main.index'))
+    page = request.args.get('page', 1, type=int)
     # posts = current_user.followed_posts().paginate(
     #     page, current_app.config['POSTS_PER_PAGE'], False)
+    models = current_user.owned_models().paginate(page, current_app.config['MODEL_PER_PAGE'], False)
     # next_url = url_for('main.explore', page=posts.next_num) \
     #     if posts.has_next else None
     # prev_url = url_for('main.explore', page=posts.prev_num) \
@@ -45,7 +59,7 @@ def index():
     # return render_template('index.html', title=_('Home'), form=form,
     #                        posts=posts.items, next_url=next_url,
     #                        prev_url=prev_url)
-    return render_template('index.html', title=_('Home'))
+    return render_template('index.html', form=form, title=_('Home'), models=models.items)
 
 
 # @bp.route('/explore')

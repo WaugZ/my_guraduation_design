@@ -78,7 +78,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        salt = "you-will_never_guess"
+        secrect = salt + str(self.id)
+        digest = md5(secrect.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
@@ -100,7 +102,9 @@ class User(UserMixin, db.Model):
     #             followers.c.follower_id == self.id)
     #     own = Post.query.filter_by(user_id=self.id)
     #     return followed.union(own).order_by(Post.timestamp.desc())
-
+    def owned_models(self):
+        models = Models.query.filter_by(user_id=self.id)
+        return models
     # def get_reset_password_token(self, expires_in=600):
     #     return jwt.encode(
     #         {'reset_password': self.id, 'exp': time() + expires_in},
@@ -140,8 +144,10 @@ def load_user(id):
 class Models(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     model_name = db.Column(db.String)
+    model_target = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    data_path = db.Column(db.String)  # path to data stored in server
     model_path = db.Column(db.String)  # path to model stored in server
 
     def __repr__(self):

@@ -1,0 +1,20 @@
+    <table class="table table-hover">
+        <tr>
+            <td width="70px">
+                <a href="{{ url_for('main.index', username=model.author.username) }}">
+                    <img src="{{ model.author.avatar(70) }}" />
+                </a>
+            </td>
+            <td>
+                {% set user_link %}
+                    <a href="{{ url_for('main.index', username=model.author.username) }}">
+                        {{ model.author.username }}
+                    </a>
+                {% endset %}
+                {{ _('%(username)s said %(when)s',
+                    username=user_link, when=moment(model.timestamp).fromNow()) }}
+                <br>
+                <span id="model{{ model.id }}">{{ model.model_name }}</span>
+            </td>
+        </tr>
+    </table>
