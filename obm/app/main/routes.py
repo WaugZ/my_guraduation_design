@@ -28,29 +28,12 @@ def before_request():
 @bp.route('/index', methods=['GET', 'POST'])
 # @login_required
 def index():
-    # form = PostForm()
-    form = ModelForm()
-    # if form.validate_on_submit():
-    #     language = guess_language(form.post.data)
-    #     if language == 'UNKNOWN' or len(language) > 5:
-    #         language = ''
-    #     post = Post(body=form.post.data, author=current_user,
-    #                 language=language)
-    #     db.session.add(post)
-    #     db.session.commit()
-    #     # flash(_('Your post is now live!'))
-    #     return redirect(url_for('main.index'))
-    if form.validate_on_submit():
-        model = Models(model_name=form.model_name.data, model_target=form.model_target.data,
-                       author=current_user, data_path=data_path, model_path=model_path)
-        db.session.add(model)
-        db.session.commit()
-        flash("A new model is under construct!")
-        # return redirect(url_for('model/<form.model_name.data>'))  # in the future version, it will jump to model page
-        return redirect(url_for('main.index'))
+    if not current_user.is_authenticated:
+        return render_template('index.html', title=_('Home'))
     page = request.args.get('page', 1, type=int)
     # posts = current_user.followed_posts().paginate(
     #     page, current_app.config['POSTS_PER_PAGE'], False)
+
     models = current_user.owned_models().paginate(page, current_app.config['MODEL_PER_PAGE'], False)
     # next_url = url_for('main.explore', page=posts.next_num) \
     #     if posts.has_next else None
@@ -61,8 +44,10 @@ def index():
     # return render_template('index.html', title=_('Home'), form=form,
     #                        posts=posts.items, next_url=next_url,
     #                        prev_url=prev_url)
-    return render_template('index.html', form=form, title=_('Home'), models=models.items, next_url=next_url,
+    return render_template('index.html', title=_('Home'), models=models.items, next_url=next_url,
                            prev_url=prev_url)
+
+
 
 
 # @bp.route('/explore')
@@ -95,21 +80,21 @@ def index():
 #                            next_url=next_url, prev_url=prev_url)
 
 
-@bp.route('/edit_profile', methods=['GET', 'POST'])
-@login_required
-def edit_profile():
-    form = EditProfileForm(current_user.username)
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
-        db.session.commit()
-        flash(_('Your changes have been saved.'))
-        return redirect(url_for('main.edit_profile'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title=_('Edit Profile'),
-                           form=form)
+# @bp.route('/edit_profile', methods=['GET', 'POST'])
+# @login_required
+# def edit_profile():
+#     form = EditProfileForm(current_user.username)
+#     if form.validate_on_submit():
+#         current_user.username = form.username.data
+#         current_user.about_me = form.about_me.data
+#         db.session.commit()
+#         flash(_('Your changes have been saved.'))
+#         return redirect(url_for('main.edit_profile'))
+#     elif request.method == 'GET':
+#         form.username.data = current_user.username
+#         form.about_me.data = current_user.about_me
+#     return render_template('edit_profile.html', title=_('Edit Profile'),
+#                            form=form)
 
 
 # @bp.route('/follow/<username>')

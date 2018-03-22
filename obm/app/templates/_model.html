@@ -1,19 +1,12 @@
-    <table class="table table-hover">
-        <tr>
-            <td>
-                {% set user_link %}
-                    {{ model.author.username }}
-                {% endset %}
-                {{ _(' %(username)s built %(when)s',
-                    username=user_link, when=moment(model.timestamp).fromNow()) }}
-                <br>
-                <span class="model{{ model.id }}">{{ model.model_name }}</span>
-            </td>
-            <td>
-                |
-            </td>
-            <td>
-                <span class="model{{ model.id }}">{{ model.model_target }}</span>
-            </td>
-        </tr>
-    </table>
+
+    <tr>
+        <td>
+            <span class="model{{ model.id }}">{{ model.model_name }}</span>
+        </td>
+        <td>
+            <span class="model{{ model.id }}">{{ model.model_target }}</span>
+        </td>
+        <td>
+            {{ _('%(when)s', when=moment(model.timestamp).format('LLL')) }}
+        </td>
+    </tr>

@@ -3,29 +3,43 @@
 
 {% block app_content %}
     {% if current_user.is_authenticated %}
-    <h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
+    <h1>{{ _('Hi, %(username)s! Here are your models', username=current_user.username) }}</h1>
     {% else %}
     <h1> Welcome to obm(One Button Modeling System)!</h1>
     {% endif %}
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-    {% for model in models %}
-        {% include '_model.html' %}
-    {% endfor %}
+
+    <hr>
+    {% if models|length > 0 %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-3"> Model Name </th>
+                <th class="col-md-3"> Model target </th>
+                <th class="col-md-3"> built time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for model in models %}
+            {% include '_model.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
     <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> {{ _('Newer models') }}
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    {{ _('Older models') }} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+            <ul class="pager">
+                <li class="previous{% if not prev_url %} disabled{% endif %}">
+                    <a href="{{ prev_url or '#' }}">
+                        <span aria-hidden="true">&larr;</span> {{ _('Newer models') }}
+                    </a>
+                </li>
+                <li class="next{% if not next_url %} disabled{% endif %}">
+                    <a href="{{ next_url or '#' }}">
+                        {{ _('Older models') }} <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% else %}
+        <span> Login and create your models! </span>
+    {% endif %}
+
 {% endblock %}

@@ -24,3 +24,11 @@
 ## 开发
 - 新增数据库表
     - FLASK_APP=obm flask db migrate -m "*** table"
+
+- 一些快速启动脚本
+    - start_db.sh
+        - 包含db init upgrade migrate 保证数据库更新（内容和列）
+    - obm_debug.sh
+        - （开发用） 含有**debug功能**的启动网页服务器
+    - obm_devserver.sh
+        - （正式用） 启动网页服务器
