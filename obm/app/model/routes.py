@@ -45,3 +45,10 @@ def new_model():
     return render_template('model/new_model.html', form=form, title=_('New_model'))
 
 
+@bp.route('/model/<model_id>', methods=['GET', 'POST'])
+def model(model_id):
+    model = Models.query.filter_by(id=model_id).first()
+    if model not in current_user.owned_models():
+        flash("You cannot access this model!")
+        return redirect(url_for('main.index'))
+    return render_template('model/model.html', model=model)

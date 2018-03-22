@@ -9,4 +9,7 @@
         <td>
             {{ _('%(when)s', when=moment(model.timestamp).format('LLL')) }}
         </td>
+        <td>
+            <a class="btn btn-info btn-circle" href="{{ url_for('model.model', model_id=model.id)}}">{{ _('Check') }}</a>
+        </td>
     </tr>

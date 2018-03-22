@@ -10,3 +10,4 @@ class ModelForm(FlaskForm):
     model_name = StringField(_l('name of model'), validators=[DataRequired()])
     model_target = StringField(_l('the class you want to model'), validators=[DataRequired()])
     submit = SubmitField(_l('Submit'))
+

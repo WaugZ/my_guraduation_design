@@ -39,7 +39,14 @@
             </ul>
         </nav>
     {% else %}
-        <span> Login and create your models! </span>
+        {% if not current_user.is_authenticated %}
+            <span> Login and create your models! </span>
+        {% else %}
+            <span>
+                <a class="btn btn-info active" href="{{ url_for('model.new_model') }}">Start to create your models!
+                </a>
+            </span>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
