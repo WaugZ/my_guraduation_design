@@ -23,5 +23,4 @@ class Config(object):
     MODEL_PER_PAGE = 10
 
     UPLOADED_PHOTOS_DEST = os.path.join(os.getcwd(), 'temp')
-    if not os.path.exists(UPLOADED_PHOTOS_DEST):
-        os.makedirs(UPLOADED_PHOTOS_DEST)
+

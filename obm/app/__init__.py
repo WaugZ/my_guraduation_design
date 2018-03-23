@@ -28,6 +28,9 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    if not os.path.exists(app.config['UPLOADED_PHOTOS_DEST']):
+        os.makedirs(app.config['UPLOADED_PHOTOS_DEST'])
+
     photos = UploadSet('photos', IMAGES)
     configure_uploads(app, photos)
 
