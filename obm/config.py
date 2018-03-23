@@ -21,3 +21,7 @@ class Config(object):
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
     # POSTS_PER_PAGE = 25
     MODEL_PER_PAGE = 10
+
+    UPLOADED_PHOTOS_DEST = os.path.join(os.getcwd(), 'temp')
+    if not os.path.exists(UPLOADED_PHOTOS_DEST):
+        os.makedirs(UPLOADED_PHOTOS_DEST)

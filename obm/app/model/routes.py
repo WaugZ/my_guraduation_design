@@ -6,7 +6,7 @@ from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
 # from app.main.forms import EditProfileForm, PostForm, SearchForm
-from app.model.forms import ModelForm
+from app.model.forms import ModelForm, UploadForm, photos
 from app.models import User, Models
 # from app.translate import translate
 from app.model import bp
@@ -42,13 +42,24 @@ def new_model():
         # return redirect(url_for('model/<form.model_name.data>'))  # in the future version, it will jump to model page
         return redirect(url_for('main.index'))
 
-    return render_template('model/new_model.html', form=form, title=_('New_model'))
+    return render_template('model/new_model.html', form=form, title=_('Create_model'))
 
 
-@bp.route('/model/<model_id>', methods=['GET', 'POST'])
-def model(model_id):
+@bp.route('/detail/<model_id>', methods=['GET', 'POST'])
+def detail(model_id):
     model = Models.query.filter_by(id=model_id).first()
     if model not in current_user.owned_models():
         flash("You cannot access this model!")
         return redirect(url_for('main.index'))
-    return render_template('model/model.html', model=model)
+    form = UploadForm()
+    img_name = request.args.get('img_name')
+    if img_name:
+        url = photos.url(img_name)
+        return render_template('model/detail.html', model=model, title=model.model_name, img_url=url)
+    if form.validate_on_submit():
+        flash("Checking")
+        filename = photos.save(form.photo.data)
+        return redirect(url_for('model.detail', model_id=model.id, img_name=filename))
+    return render_template('model/detail.html', model=model, title=model.model_name, form=form)
+
+

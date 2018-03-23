@@ -10,6 +10,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from elasticsearch import Elasticsearch
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from config import Config
 
 db = SQLAlchemy()
@@ -26,6 +27,9 @@ babel = Babel()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    photos = UploadSet('photos', IMAGES)
+    configure_uploads(app, photos)
 
     db.init_app(app)
     migrate.init_app(app, db)

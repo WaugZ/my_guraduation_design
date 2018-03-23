@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="container">
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="colsm-12">
+                    <h2> {{ _('%(model_name)s', model_name=model.model_name) }} </h2>
+                </div>
+            </div>
+            <small> {{ _('Built in %(create_time)s', create_time=moment(model.timestamp).format('LLL')) }} </small>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h4 class="text-center"> Model detail </h4>
+                <dl>
+                    <dt> Name </dt>
+                    <dd> {{ _('%(name)s', name=model.model_name) }} </dd>
+                    <dt> Target </dt>
+                    <dd> {{ _('%(target)s', target=model.model_target) }} </dd>
+                    <dt> Statue </dt>
+                    <dd> Done </dd>  <!-- will be checked dynamic in future -->
+                </dl>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            {% if form %}
+            {{ wtf.quick_form(form) }}
+            <br>
+            {% elif img_url %}
+            <img src={{ img_url }}>
+            <span> Confidence: 0.9</span>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
