@@ -149,6 +149,10 @@ class Models(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     data_path = db.Column(db.String)  # path to data stored in server
     model_path = db.Column(db.String)  # path to model stored in server
+    pid = db.Column(db.Integer)  # store the pid
+
+    def clean_pid(self):
+        self.pid = 0
 
     def __repr__(self):
-        return  '<Model {}>'.format(self.model_name)
+        return '<Model {}>'.format(self.model_name)

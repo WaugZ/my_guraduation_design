@@ -1,3 +1,5 @@
+import os
+import subprocess
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
     jsonify, current_app
@@ -11,8 +13,9 @@ from app.models import User, Models
 from app.main import bp
 
 
-data_path = "/"
-model_path = "/"
+
+
+
 
 @bp.before_app_request
 def before_request():
