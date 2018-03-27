@@ -22,7 +22,6 @@ data_path = "/media/store/paper_data_temp/data"
 model_path = "/media/store/paper_data_temp/models"
 
 
-
 def crawl_by_name(model_name, model_target):
     crawl_file = os.path.join(crawl_path, model_name + ".txt")
     with codecs.open(crawl_file, 'w', 'utf-8') as file:
@@ -46,7 +45,6 @@ def complete_check(pid):
         return p.status()
     except psutil.NoSuchProcess:
         return "process has done"
-
 
 
 @bp.before_app_request
@@ -98,7 +96,7 @@ def detail(model_id):
     return render_template('model/detail.html', model=model, title=model.model_name, form=form)
 
 
-@bp.route('/check/<model_id>', methods=['GET', 'POST'])
+@bp.route('/check/<model_id>', methods=['GET'])
 def check(model_id):
     model = Models.query.filter_by(id=model_id).first()
 
