@@ -1,8 +1,4 @@
 # coding=utf-8
-import os
-import sys
-import subprocess
-import codecs
 from multiprocessing import Process
 import psutil
 import shutil
@@ -15,28 +11,12 @@ from app import db
 from app.model.forms import ModelForm, UploadForm, photos
 from app.models import User, Models
 from app.model import bp
+from app.model_building import crawl_by_name
 
 
-crawl_path = "/media/store/paper_data_temp/crawl"
-data_path = "/media/store/paper_data_temp/data"
 model_path = "/media/store/paper_data_temp/models"
+data_path = "/media/store/paper_data_temp/data"
 
-
-def crawl_by_name(model_name, model_target):
-    crawl_file = os.path.join(crawl_path, model_name + ".txt")
-    with codecs.open(crawl_file, 'w', 'utf-8') as file:
-        file.write(model_name + "|" + model_target)
-        pass
-    pwd = os.getcwd()
-    os.chdir("/home/train/myTrain/scripts/idt-pitaya-serv-opencv/target")
-    input_dir = crawl_file
-    output_dir = os.path.join(data_path, model_target)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-        subprocess.call(("sh", "./run.sh", "ImageCrawlerCli", "-input", input_dir, "-output", output_dir))
-
-    os.chdir(pwd)
-    sys.exit(0)
 
 
 def complete_check(pid):
