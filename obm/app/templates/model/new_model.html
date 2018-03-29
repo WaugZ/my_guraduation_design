@@ -14,7 +14,7 @@
                     {{ form.csrf_token }}
                     <div class="form-group  required">
                         <label class="control-label" for="{{ form.model_name }}" >{{ form.model_name.label }}</label>
-                        <input class="form-control" id="{{ form.model_name }}" name="{{ form.model_name }}" required type="text" value="">
+                        <input class="form-control" id="{{ form.model_name }}" name="{{ form.model_name }}" type="text" value=" ">
                     </div>
                     <div class="form-group "><label class="control-label" for="model_targets">the class you want to model</label>
                         <ul class="form-control" id="model_targets"><li><label for="model_targets-0">Model Targets-0</label> <input id="model_targets-0" name="model_targets-0" type="text" value=""></li></ul>
