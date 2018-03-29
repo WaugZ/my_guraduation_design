@@ -9,7 +9,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6">{{ wtf.quick_form(form) }}</div>
+            <div class="col-md-6">
+                <form action="" method="post" class="form" role="form">
+                    {{ form.csrf_token }}
+                    <div class="form-group  required">
+                        <label class="control-label" for="{{ form.model_name }}" >{{ form.model_name.label }}</label>
+                        <input class="form-control" id="{{ form.model_name }}" name="{{ form.model_name }}" required type="text" value="">
+                    </div>
+                    <div class="form-group "><label class="control-label" for="model_targets">the class you want to model</label>
+                        <ul class="form-control" id="model_targets"><li><label for="model_targets-0">Model Targets-0</label> <input id="model_targets-0" name="model_targets-0" type="text" value=""></li></ul>
+
+                    </div>
+                    <input class="btn btn-default" id="add_target" name="add_target" type="submit" value="Add Target">
+                    <input class="btn btn-default" id="remove_target" name="remove_target" type="submit" value="Remove Target">
+                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+                </form>
+
+                {{ wtf.quick_form(form) }}
+            </div>
             <div class="col-md-3"></div>
         </div>
     </div>

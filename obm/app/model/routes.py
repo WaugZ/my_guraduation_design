@@ -11,7 +11,7 @@ from app import db
 from app.model.forms import ModelForm, UploadForm, photos
 from app.models import User, Models
 from app.model import bp
-from app.model_building import crawl_by_name
+from app.model_building import auto_modeling
 
 
 model_path = "/media/store/paper_data_temp/models"
@@ -44,9 +44,13 @@ def new_model():
         return render_template('index.html', title=_('Home'))
 
     form = ModelForm()
-    if form.validate_on_submit():
+    if form.add_target.data:
+        form.model_targets.append_entry('')
+    elif form.remove_target.data:
+        form.model_targets.pop_entry()
+    elif request.form and form.validate_on_submit():
         flash("A new model is under construct!")
-        p = Process(name="crawl", target=crawl_by_name, args=(form.model_name.data, form.model_target.data))
+        p = Process(name="crawl", target=auto_modeling, args=(form.model_name.data, form.model_target.data))
         p.daemon = True
         p.start()
         model = Models(model_name=form.model_name.data, model_target=form.model_target.data,
