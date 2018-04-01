@@ -10,22 +10,32 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <form action="" method="post" class="form" role="form">
-                    {{ form.csrf_token }}
-                    <div class="form-group  required">
-                        <label class="control-label" for="{{ form.model_name }}" >{{ form.model_name.label }}</label>
-                        <input class="form-control" id="{{ form.model_name }}" name="{{ form.model_name }}" type="text" value=" ">
-                    </div>
-                    <div class="form-group "><label class="control-label" for="model_targets">the class you want to model</label>
-                        <ul class="form-control" id="model_targets"><li><label for="model_targets-0">Model Targets-0</label> <input id="model_targets-0" name="model_targets-0" type="text" value=""></li></ul>
+                <form class="form form-horizontal" method="post" role="form">
+                    {{ form.hidden_tag() }}
+                    {% for field, msgs in form.errors.items() %}
+                        {% for error in msgs %}
+                            <div class="alert alert-info" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
 
+                    {{ wtf.form_field(form.model_name) }}
+                    {% for model_target in form.model_targets %}
+                        {{ wtf.form_field(model_target) }}
+                    {% endfor %}
+                    <div class="container">
+                        <div class="col-md-2">{{ wtf.form_field(form.add_target, button_map={'add_target':'primary'}) }}</div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">{{ wtf.form_field(form.remove_target, button_map={'remove_target':'danger'}) }}</div>
                     </div>
-                    <input class="btn btn-default" id="add_target" name="add_target" type="submit" value="Add Target">
-                    <input class="btn btn-default" id="remove_target" name="remove_target" type="submit" value="Remove Target">
-                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+                    <br>
+                    <div class="container">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">{{ wtf.form_field(form.submit, button_map={'submit':'success'}) }}</div>
+                        <div class="col-md-2"></div>
+                    </div>
+
                 </form>
 
-                {{ wtf.quick_form(form) }}
             </div>
             <div class="col-md-3"></div>
         </div>

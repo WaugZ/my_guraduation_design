@@ -50,10 +50,14 @@ def new_model():
         form.model_targets.pop_entry()
     elif request.form and form.validate_on_submit():
         flash("A new model is under construct!")
+        targets = ""
+        for target in form.model_targets.data:
+            targets += target + "#"
+        targets = targets[:-1]  # delete the last '#'
         p = Process(name="crawl", target=auto_modeling, args=(form.model_name.data, form.model_target.data))
         p.daemon = True
         p.start()
-        model = Models(model_name=form.model_name.data, model_target=form.model_target.data,
+        model = Models(model_name=form.model_name.data, model_target=targets,
                        author=current_user, data_path=data_path, model_path=model_path, pid=p.pid)
         db.session.add(model)
         db.session.commit()

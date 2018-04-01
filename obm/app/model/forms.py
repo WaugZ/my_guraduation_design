@@ -11,10 +11,28 @@ from app.models import User
 class ModelForm(FlaskForm):
     model_name = StringField(_l('name of model'), validators=[DataRequired()])
     # model_target = StringField(_l('the class you want to model'), validators=[DataRequired()])
-    model_targets = FieldList(StringField(validators=[DataRequired()]), label='the class you want to model', min_entries=1)
-    add_target = SubmitField()
-    remove_target = SubmitField()
+    model_targets = FieldList(StringField(validators=[]),
+                              label='the class you want to model', min_entries=2)
+    add_target = SubmitField(_('Add'))
+    remove_target = SubmitField(_('Remove'))
     submit = SubmitField(_l('Submit'))
+
+    def validate(self):
+        if not super(ModelForm, self).validate():
+            return False
+        val_set = set()
+        for target in self.model_targets:
+            if target.data == "":
+                msg = "target cannot be empty"
+                self.model_targets.errors.append(msg)
+                return False
+            if target.data not in val_set:
+                val_set.add(target.data)
+            else:
+                msg = "target cannot be duplicated"
+                self.model_targets.errors.append(msg)
+                return False
+        return True
 
 
 photos = UploadSet('photos', IMAGES)
