@@ -36,8 +36,16 @@
             {{ wtf.quick_form(form) }}
             <br>
             {% elif img_url %}
-            <img src={{ img_url }}>
-            <span> Confidence: 0.9</span>
+            <a class="btn btn-default btn-circle" href="{{ url_for('model.detail', model_id=model.id)}}">{{ _('Back') }}</a>
+            <div>
+                {% if confidence > 0.5 %}
+                    <span> I think there is a(n) {{ label }} with confidence {{ confidence }}</span>
+                {% else %}
+                    <span> I don't think there is any target in the picture </span>
+                {% endif %}
+            </div>
+            <div><img src={{ img_url }}></div>
+
             {% endif %}
         </div>
 

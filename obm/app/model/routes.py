@@ -78,13 +78,13 @@ def detail(model_id):
         return redirect(url_for('main.index'))
     form = UploadForm()
     img_name = request.args.get('img_name')
+    label = request.args.get('label')
     confidence = request.args.get('confidence')
-    if img_name:
+    if img_name and label and confidence:
         url = photos.url(img_name)
         return render_template('model/detail.html', model=model, title=model.model_name,
-                               img_url=url, confidence=confidence)
+                               img_url=url, label=label, confidence=confidence)
     if form.validate_on_submit():
-        flash("Checking")
         filename = photos.save(form.photo.data)
         return redirect(url_for('model.recognize', model_id=model.id, img_name=filename))
         # return redirect(url_for('model.detail', model_id=model.id, img_name=filename))
@@ -118,7 +118,7 @@ def recognize(model_id):
     if model not in current_user.owned_models():
         flash("You cannot access this model!")
         return redirect(url_for('main.index'))
-    confidence = app.recognition.recognize(model.model_path, img_name)
-    return redirect(url_for('model.detail', model_id=model.id, img_name=img_name))
+    label, confidence = app.recognition.recognize(model.model_path, img_name)
+    return redirect(url_for('model.detail', model_id=model.id, img_name=img_name, label=label, confidence=confidence))
 
 
