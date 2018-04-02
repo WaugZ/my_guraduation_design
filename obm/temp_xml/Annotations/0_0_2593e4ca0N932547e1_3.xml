@@ -1,0 +1,16 @@
+<annotation>
+  <size>
+    <width>590</width>
+    <height>2040</height>
+  </size>
+  <object>
+    <name>雪碧</name>
+    <confidence>0.99978596</confidence>
+    <bndbox>
+      <xmin>26.2835998535</xmin>
+      <ymin>83.0595703125</ymin>
+      <xmax>558.939941406</xmax>
+      <ymax>1980.53125</ymax>
+    </bndbox>
+  </object>
+</annotation>

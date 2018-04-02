@@ -31,6 +31,9 @@ def create_app(config_class=Config):
     if not os.path.exists(app.config['UPLOADED_PHOTOS_DEST']):
         os.makedirs(app.config['UPLOADED_PHOTOS_DEST'])
 
+    if not os.path.exists(app.config['RECOGNITION_RESULT_DEST']):
+        os.makedirs(app.config['RECOGNITION_RESULT_DEST'])
+
     photos = UploadSet('photos', IMAGES)
     configure_uploads(app, photos)
 

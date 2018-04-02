@@ -1,7 +1,7 @@
 # coding=utf-8
 from multiprocessing import Process
 import psutil
-import shutil
+import os.path as osp
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
     jsonify, current_app
@@ -12,6 +12,8 @@ from app.model.forms import ModelForm, UploadForm, photos
 from app.models import User, Models
 from app.model import bp
 from app.model_building import auto_modeling
+import app.recognition
+# from app.recognition import recognize
 
 
 model_path = "/media/store/paper_data_temp/models"
@@ -54,11 +56,13 @@ def new_model():
         for target in form.model_targets.data:
             targets += target + "#"
         targets = targets[:-1]  # delete the last '#'
-        p = Process(name="crawl", target=auto_modeling, args=(form.model_name.data, form.model_target.data))
+        p = Process(name="modeling", target=auto_modeling,
+                    args=(form.model_name.data + datetime.now().strftime("%Y%m%d%H%M"), targets,))
         p.daemon = True
         p.start()
-        model = Models(model_name=form.model_name.data, model_target=targets,
-                       author=current_user, data_path=data_path, model_path=model_path, pid=p.pid)
+        model = Models(model_name=form.model_name.data, model_target=targets, author=current_user,
+                       model_path=osp.join(model_path, form.model_name.data + datetime.now().strftime("%Y%m%d%H%M")),
+                       pid=p.pid)
         db.session.add(model)
         db.session.commit()
         return redirect(url_for('main.index', title="Home"))
@@ -74,13 +78,16 @@ def detail(model_id):
         return redirect(url_for('main.index'))
     form = UploadForm()
     img_name = request.args.get('img_name')
+    confidence = request.args.get('confidence')
     if img_name:
         url = photos.url(img_name)
-        return render_template('model/detail.html', model=model, title=model.model_name, img_url=url)
+        return render_template('model/detail.html', model=model, title=model.model_name,
+                               img_url=url, confidence=confidence)
     if form.validate_on_submit():
         flash("Checking")
         filename = photos.save(form.photo.data)
-        return redirect(url_for('model.detail', model_id=model.id, img_name=filename))
+        return redirect(url_for('model.recognize', model_id=model.id, img_name=filename))
+        # return redirect(url_for('model.detail', model_id=model.id, img_name=filename))
     return render_template('model/detail.html', model=model, title=model.model_name, form=form)
 
 
@@ -102,3 +109,16 @@ def check(model_id):
     # flash(statue)
 
     return redirect(url_for('model.detail', model_id=model.id))
+
+
+@bp.route('/recognize/<model_id>', methods=['GET', 'POST'])
+def recognize(model_id):
+    model = Models.query.filter_by(id=model_id).first()
+    img_name = request.args.get('img_name')
+    if model not in current_user.owned_models():
+        flash("You cannot access this model!")
+        return redirect(url_for('main.index'))
+    confidence = app.recognition.recognize(model.model_path, img_name)
+    return redirect(url_for('model.detail', model_id=model.id, img_name=img_name))
+
+

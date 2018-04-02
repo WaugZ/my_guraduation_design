@@ -26,7 +26,7 @@
                     <dt> Target </dt>
                     <dd> {{ _('%(target)s', target=model.model_target) }} </dd>
                     <dt> Statue </dt>
-                    <dd> Done </dd>  <!-- will be checked dynamic in future -->
+                    <dd> {% if model.pid == 0 %}Done {% else %} Not complete {% endif %} </dd>
                 </dl>
             </div>
         </div>
