@@ -21,7 +21,7 @@ class ModelForm(FlaskForm):
         if not super(ModelForm, self).validate():
             return False
         val_set = set()
-        if " " in self.model_name:
+        if " " in self.model_name.data:
             self.model_name.errors.append("model name cannot contain ' '[space]")
             return False
         for target in self.model_targets:

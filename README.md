@@ -1,7 +1,7 @@
 # my_guraduation_design
 ## no title
 - 这里主要做前端，后端为基本交互
-- 公司相关代码不会传到这个项目
+- 公司相关代码(核心服务器)不会传到这个项目
 
 ## 运行
 - cd obm
@@ -32,3 +32,10 @@
         - （开发用） 含有**debug功能**的启动网页服务器
     - obm_devserver.sh
         - （正式用） 启动网页服务器
+
+## 核心服务器
+- 建模服务器
+    - python model_build_server.py 启动建模服务器
+
+- 识别服务器
+    - python recognition_server.py 启动识别服务器、

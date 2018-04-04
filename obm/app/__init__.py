@@ -11,7 +11,7 @@ from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from elasticsearch import Elasticsearch
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-from config import Config
+from config import Config, ServerConfig
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -28,11 +28,11 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    if not os.path.exists(app.config['UPLOADED_PHOTOS_DEST']):
-        os.makedirs(app.config['UPLOADED_PHOTOS_DEST'])
+    if not os.path.exists(ServerConfig.UPLOADED_PHOTOS_DEST):
+        os.makedirs(ServerConfig.UPLOADED_PHOTOS_DEST)
 
-    if not os.path.exists(app.config['RECOGNITION_RESULT_DEST']):
-        os.makedirs(app.config['RECOGNITION_RESULT_DEST'])
+    if not os.path.exists(ServerConfig.RECOGNITION_RESULT_DEST):
+        os.makedirs(ServerConfig.RECOGNITION_RESULT_DEST)
 
     photos = UploadSet('photos', IMAGES)
     configure_uploads(app, photos)

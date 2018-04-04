@@ -22,8 +22,12 @@ class Config(object):
     # POSTS_PER_PAGE = 25
     MODEL_PER_PAGE = 10
 
-    # some path for data saving
     UPLOADED_PHOTOS_DEST = os.path.join(os.getcwd(), 'temp_img')
+
+
+class ServerConfig(object):
+    # some server configure
+    UPLOADED_PHOTOS_DEST = Config.UPLOADED_PHOTOS_DEST
     RECOGNITION_RESULT_DEST = os.path.join(os.getcwd(), 'temp_xml')
     CRAWL_PATH = "/media/store/paper_data_temp/crawl"
     DATA_PATH = "/media/store/paper_data_temp/data"
