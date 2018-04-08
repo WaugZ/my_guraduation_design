@@ -18,7 +18,6 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
-        # g.search_form = SearchForm()
     g.locale = str(get_locale())
 
 
@@ -119,7 +118,6 @@ def recognize(model_id):
     msg = json.loads(r.text)
     label = msg['label']
     confidence = msg['confidence']
-    # label, confidence = app.recognition.recognize(model.model_path, img_name)
     return redirect(url_for('model.detail', model_id=model.id, img_name=img_name, label=label, confidence=confidence))
 
 
